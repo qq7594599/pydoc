@@ -10,5 +10,5 @@ homeController = Blueprint('home', __name__, template_folder='templates')
 @homeController.route('/', defaults={'page': 'index'})
 @homeController.route('/<page>')
 def index(page):
-    return render_template('home/%s.html' % page)
+    return render_template('%s.html' % page)
 

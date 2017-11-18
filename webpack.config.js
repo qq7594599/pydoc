@@ -88,9 +88,9 @@ module.exports = {
     ]
   },
   "output": {
-    "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
-    "chunkFilename": "[id].chunk.js"
+    "path": path.join(process.cwd(), "www"),
+    "filename": "static/[name].bundle.js",
+    "chunkFilename": "static/[id].chunk.js"
   },
   "module": {
     "rules": [
@@ -367,7 +367,7 @@ module.exports = {
     new NamedLazyChunksWebpackPlugin(),
     new HtmlWebpackPlugin({
       "template": "./src/index.html",
-      "filename": "./index.html",
+      "filename": "templates/index.html",
       "hash": false,
       "inject": true,
       "compile": true,
@@ -393,7 +393,9 @@ module.exports = {
         }
     }
     }),
-    new BaseHrefWebpackPlugin({}),
+    new BaseHrefWebpackPlugin({
+      baseHref: '/'
+    }),
     new CommonsChunkPlugin({
       "name": [
         "inline"
