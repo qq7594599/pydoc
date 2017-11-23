@@ -5,4 +5,4 @@ __author__ = 'Charence Wang'
 
 from www import app
 
-app.run();
+app.run()
