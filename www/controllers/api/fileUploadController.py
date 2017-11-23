@@ -3,7 +3,8 @@
 
 __author__ = 'Charence Wang'
 
-from flask import Blueprint, request
+from uuid import uuid4
+from flask import Blueprint, request, jsonify
 from www.service.fileRepo import FileRepo
 
 fileUploadController = Blueprint('fileUpload', __name__)
@@ -23,6 +24,13 @@ def index():
 @fileUploadController.route('/fileUpload', methods=['GET', 'POST'])
 def fileUpload():
     fileRepo = FileRepo(request.files['file'])
-    fileRepo.save()
-    return 'ok'
+    storageId = fileRepo.save()
+    #return storageId
+    result = {
+        'status': 'success',
+        'storage_id': storageId,
+        'reference_code': str(uuid4())
+    }
+
+    return jsonify(result)
 

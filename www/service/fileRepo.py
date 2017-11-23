@@ -8,6 +8,8 @@ import os
 import time
 import uuid
 
+from www.dataaccess.file_module import FileModule
+
 class FileRepo:
     def __init__(self, uploadedFile):
         self.uploadedFile = uploadedFile
@@ -23,6 +25,20 @@ class FileRepo:
             return location
 
     def save(self):
-        store_path = os.path.normpath(os.getcwd() + self._getStoreLocation())
+        store_relative_path = self._getStoreLocation()
+        store_path = os.path.normpath(os.getcwd() + store_relative_path)
         filepath = os.path.join(store_path, self.storageId)
         self.uploadedFile.save(filepath)
+
+        root, ext = os.path.splitext(self.uploadedFile.filename)
+        obj = {
+            'file_name': root,
+            'file_ext': ext,
+            'storage_name': self.storageId,
+            'location': store_relative_path
+        }
+
+        module = FileModule()
+        module.new_file(obj)
+
+        return self.storageId
